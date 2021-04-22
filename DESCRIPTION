@@ -1,0 +1,15 @@
+Package: fitness
+Type: Package
+Title: Tracks Caloric Consumption and Body Weight Overtime, Calculates Basal Metabolic Rate
+Version: 0.1.0
+Author: Gregory Foster
+Maintainer: Gregory Foster <gfoster4@usf.edu>
+Description: Lets the fitness-minded data scientist track their body weight and caloric consumption over time without leaving the 
+R-Studio environment. Requires ggplot2 and gridExtra for visualizations to function. 
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    ggplot2,
+    gridExtra
+RoxygenNote: 7.1.1
