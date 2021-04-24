@@ -1,0 +1,74 @@
+---
+title: "Fitness Package Examples"
+author: "Greg Foster"
+date: "4/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(fitness)
+```
+
+This package lets an individual user make their own fitness profile with the S4 class
+"athlete". Here is an example using my own information. Height is entered in cm, weight in kg,
+and age in years. For gender please type in either "Male" or "Female", the functions in this package are
+case sensitive.
+
+```{r}
+Greg <- new("athlete", Greg <- new("athlete", name="Greg Foster", height=176, weight=70, age=22, gender="Male"))
+```
+
+You will see that there is now an object named "Greg" of formal class athlete. This package has a customized "show"
+method for the athlete class, as seen below. 
+
+```{r}
+Greg
+```
+
+Just by typing in the name of your profile and hitting enter, you will see a nicely formatted summary of your height, weight, age, and gender. The "show" method also calculates your basal metabolic rate using the Harris–Benedict equations revised by Mifflin and St Jeor in 1990. The equation is slightly different for males and females, which is why the gender specificity is relevant in the profile creation. 
+
+With a profile and basal metabolic rate established in the global environment, we can move on to the four integral functions of the package. 
+
+First is init_vectors(), a pre-requisite for using the other three functions. Simply type in the function as seen below, no arguments are required. 
+
+```{r}
+init_vectors()
+```
+
+Now there are two empty vectors, ivec and wvec, in the global environment. The functions intake_tracker() and weight_tracker() will fill in these vectors as you use them. For sake of simplicity, I will go ahead and fill in these vectors as if the package has been in use for about 1 month. 
+
+The ivec vector contains daily caloric intakes. Each value represents the total calories consumed in one day. I will fill in 29 example values and then use the intake_tracker() function to fill in the 30th value, so you will see the end result of one month of use. 
+
+```{r}
+ivec <- c(2100,2100,2100,2100,2100,2100,2100,2100,2100,2100,2200,2200,2200,2200,2200,2200,2200,2200,2200,2200,2300,2300,2300,2300,2300,2300,2300,2300,2300)
+
+intake_tracker(2350)
+
+```
+
+The intake_tracker function is designed to be used on a daily basis. All you need to do is call the function and enter the number of total calories you consumed that day, and the function does the rest. It takes all of the ivec values, creates a corresponding days vector, joins them into a data frame, and plots the results with ggplot2. You will also be able to see your calculated basal metabolic rate (BMR) on the plot for convenience. 
+
+The wvec vector corresponds to the weight_tracker() function, and is meant to be used weekly rather than daily. The idea is that daily fluctuations of bodyweight lead to overreacting and overcompensating when shooting for a goal, so weekly measurements help to keep you sane. 
+
+I will fill in the wvec vector with three variables, then use the function once, to simulate one month of use. 
+
+```{r}
+wvec <- c(70,70.5,71)
+weight_tracker(71.5, 72)
+```
+
+The weight_tracker() function takes two arguments. The first is your current weight in kilograms, and the second is what you want to weigh eventually. The function takes the values from the wvec vector, creates a corresponding x vector, merges them into a data frame, and plots the values with ggplot2. It uses the second argument to show you how far away you are from reaching your goal. In the example above, the goal of this individual is to weigh 72 kilograms. 
+
+The weight_calorie_matrix() function is complementary to both the weight_tracker() and intake_tracker() functions, and is best used only after these two functions have been in use for about 1 month. 
+
+```{r}
+weight_calorie_matrix()
+```
+
+This final function simply provides a nice overview of your data, showing your caloric intake history and weight progression side by side using gridExtra and ggplot2. 
+
+That's all there is to this package, but it is still in development and many more features are to come!
